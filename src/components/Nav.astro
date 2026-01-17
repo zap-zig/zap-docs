@@ -6,7 +6,7 @@ const links = [
   { href: 'https://zap-zig.github.io/zap-docs/docs/config/', label: 'Config' },
 ];
 
-const currentPath = Astro.url.pathname;
+const currentUrl = Astro.url.href;
 ---
 
 <nav>
@@ -19,11 +19,11 @@ const currentPath = Astro.url.pathname;
       <span>zap</span>
     </a>
     <div class="links">
-      {links.map(link => (
-        <a href={link.href} class:list={['nav-link', { active: currentPath === link.href }]}>
-          {link.label}
-        </a>
-      ))}
+       {links.map(link => (
+         <a href={link.href} class:list={['nav-link', { active: currentUrl === link.href }]}>
+           {link.label}
+         </a>
+       ))}
       <a href="https://github.com/zap-zig/zap-docs" class="btn-tonal" target="_blank">
         <span class="material-symbols-rounded" style="font-size: 18px;">code</span>
         GitHub
