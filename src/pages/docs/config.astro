@@ -1,0 +1,99 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import Code from '../../components/Code.astro';
+---
+
+<DocsLayout title="Configuration" description="zap configuration files">
+  <p>zap uses two configuration files to manage your project.</p>
+
+  <h2>pyproject.toml</h2>
+  <p>Standard Python project configuration file. zap reads and writes the <code>[project]</code> section.</p>
+  
+  <Code lang="toml" code={`[project]
+name = "my-app"
+version = "0.1.0"
+requires-python = ">= 3.12"
+dependencies = [
+    "requests",
+    "flask",
+    "sqlalchemy",
+]`} />
+
+  <p><strong>Fields:</strong></p>
+  <table>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td>Project name</td>
+    </tr>
+    <tr>
+      <td><code>version</code></td>
+      <td>Project version</td>
+    </tr>
+    <tr>
+      <td><code>requires-python</code></td>
+      <td>Python version constraint</td>
+    </tr>
+    <tr>
+      <td><code>dependencies</code></td>
+      <td>List of package dependencies</td>
+    </tr>
+  </table>
+
+  <h2>zap.lock</h2>
+  <p>Lock file that records exact versions of installed packages. Auto-generated, do not edit manually.</p>
+  
+  <Code lang="toml" code={`# zap.lock - Fast and Safe Python Package Manager
+# This file is auto-generated. Do not edit manually.
+
+python = "3.12.1"
+
+[[packages]]
+name = "certifi"
+version = "2024.2.2"
+
+[[packages]]
+name = "requests"
+version = "2.31.0"`} />
+
+  <h2>Global Cache</h2>
+  <p>Downloaded packages are cached globally at:</p>
+  <Code lang="bash" code="~/.cache/zap/wheels/" />
+  
+  <p>Structure:</p>
+  <Code lang="text" code={`~/.cache/zap/
+  wheels/
+    requests-2.31.0/
+      requests-2.31.0-py3-none-any.whl
+      extracted/
+    certifi-2024.2.2/
+      certifi-2024.2.2-py3-none-any.whl
+      extracted/`} />
+
+  <p>Manage with <code>zap cache</code> commands:</p>
+  <Code lang="bash" code={`# View cache size
+zap cache info
+
+# Clear all cached packages
+zap cache clean`} />
+
+  <h2>Virtual Environment</h2>
+  <p>zap creates a standard Python virtual environment at <code>.venv/</code>:</p>
+  <Code lang="text" code={`.venv/
+  bin/
+    python
+    pip
+    activate
+  lib/
+    python3.12/
+      site-packages/
+  pyvenv.cfg`} />
+  
+  <p>You can activate it manually if needed:</p>
+  <Code lang="bash" code="source .venv/bin/activate" />
+  
+  <p>But <code>zap run</code> automatically uses the venv, so activation is usually unnecessary.</p>
+</DocsLayout>

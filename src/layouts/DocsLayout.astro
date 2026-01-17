@@ -1,0 +1,228 @@
+---
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const sidebar = [
+  { href: '/docs/install', label: 'Installation', icon: 'download' },
+  { href: '/docs/commands', label: 'Commands', icon: 'terminal' },
+  { href: '/docs/config', label: 'Configuration', icon: 'settings' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<Layout title={`${title} - zap`} description={description}>
+  <Nav />
+  
+  <div class="docs-container">
+    <aside class="sidebar">
+      <nav>
+        <div class="sidebar-header">
+          <span class="material-symbols-rounded">menu_book</span>
+          <span>Documentation</span>
+        </div>
+        <ul>
+          {sidebar.map(item => (
+            <li>
+              <a href={item.href} class:list={[{ active: currentPath === item.href }]}>
+                <span class="material-symbols-rounded">{item.icon}</span>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+    
+    <main class="content">
+      <h1>{title}</h1>
+      <slot />
+    </main>
+  </div>
+
+  <Footer />
+</Layout>
+
+<style>
+  .docs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    padding: 2rem 1.5rem;
+    min-height: calc(100vh - 200px);
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+  }
+
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--md-on-surface-variant);
+    padding: 0 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .sidebar-header .material-symbols-rounded {
+    font-size: 18px;
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .sidebar li {
+    margin-bottom: 0.25rem;
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--md-on-surface-variant);
+    padding: 0.625rem 0.75rem;
+    border-radius: var(--md-shape-full);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .sidebar a .material-symbols-rounded {
+    font-size: 20px;
+  }
+
+  .sidebar a:hover {
+    background: var(--md-surface-container-high);
+    color: var(--md-on-surface);
+    opacity: 1;
+  }
+
+  .sidebar a.active {
+    background: var(--md-surface-container-highest);
+    color: var(--md-primary);
+  }
+
+  .content {
+    max-width: 800px;
+  }
+
+  .content h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--md-outline-variant);
+  }
+
+  .content :global(h2) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .content :global(h3) {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .content :global(p) {
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  .content :global(pre) {
+    margin: 1rem 0 1.5rem;
+  }
+
+  .content :global(ul),
+  .content :global(ol) {
+    margin-bottom: 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .content :global(li) {
+    margin-bottom: 0.375rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .content :global(table) {
+    margin: 1rem 0 1.5rem;
+    border-radius: var(--md-shape-sm);
+    overflow: hidden;
+    border: 1px solid var(--md-outline-variant);
+  }
+
+  .content :global(th),
+  .content :global(td) {
+    padding: 0.625rem 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .content :global(th) {
+    background: var(--md-surface-container-high);
+    font-weight: 600;
+    border-bottom: 1px solid var(--md-outline-variant);
+  }
+
+  .content :global(td) {
+    border-bottom: 1px solid var(--md-outline-variant);
+  }
+
+  .content :global(tr:last-child td) {
+    border-bottom: none;
+  }
+
+  .content :global(tr:hover td) {
+    background: var(--md-surface-container-low);
+  }
+
+  @media (max-width: 900px) {
+    .docs-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+      position: static;
+      border-bottom: 1px solid var(--md-outline-variant);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar ul {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .sidebar li {
+      margin-bottom: 0;
+    }
+  }
+</style>

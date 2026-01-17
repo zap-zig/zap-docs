@@ -1,0 +1,95 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import Code from '../../components/Code.astro';
+---
+
+<DocsLayout title="Commands" description="zap command reference">
+  <p>Complete reference for all zap commands.</p>
+
+  <h2>init</h2>
+  <p>Initialize a new Python project with a virtual environment.</p>
+  <Code lang="bash" code="zap init [--python <version>]" />
+  
+  <p>Creates:</p>
+  <ul>
+    <li><code>.venv/</code> - Virtual environment</li>
+    <li><code>zap.lock</code> - Lock file</li>
+    <li><code>pyproject.toml</code> - Project configuration</li>
+  </ul>
+
+  <p><strong>Options:</strong></p>
+  <table>
+    <tr>
+      <th>Option</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>--python &lt;version&gt;</code></td>
+      <td>Specify Python version (e.g., 3.12)</td>
+    </tr>
+  </table>
+
+  <h2>append</h2>
+  <p>Install one or more packages.</p>
+  <Code lang="bash" code={`zap append <package>...
+
+# Examples
+zap append requests
+zap append flask sqlalchemy pytest`} />
+  
+  <p>Packages are:</p>
+  <ul>
+    <li>Downloaded from PyPI</li>
+    <li>Cached globally at <code>~/.cache/zap/</code></li>
+    <li>Added to <code>pyproject.toml</code></li>
+  </ul>
+
+  <h2>remove</h2>
+  <p>Remove one or more packages.</p>
+  <Code lang="bash" code={`zap remove <package>...
+
+# Example
+zap remove requests flask`} />
+
+  <h2>sync</h2>
+  <p>Install all dependencies from <code>pyproject.toml</code>.</p>
+  <Code lang="bash" code="zap sync" />
+  
+  <p>Use this after cloning a project or when <code>pyproject.toml</code> changes.</p>
+
+  <h2>run</h2>
+  <p>Run a Python script in the virtual environment.</p>
+  <Code lang="bash" code={`zap run <script.py> [args...]
+
+# Examples
+zap run app.py
+zap run server.py --port 8080`} />
+
+  <h2>list</h2>
+  <p>List all installed packages.</p>
+  <Code lang="bash" code={`zap list
+
+# Output:
+# Installed packages (3):
+#   certifi 2024.2.2
+#   requests 2.31.0
+#   urllib3 2.2.0`} />
+
+  <h2>cache</h2>
+  <p>Manage the global package cache.</p>
+  <Code lang="bash" code={`# Show cache info
+zap cache info
+
+# Clear cache
+zap cache clean`} />
+
+  <h2>version</h2>
+  <p>Show zap version.</p>
+  <Code lang="bash" code={`zap version
+zap --version`} />
+
+  <h2>help</h2>
+  <p>Show help message.</p>
+  <Code lang="bash" code={`zap help
+zap --help`} />
+</DocsLayout>

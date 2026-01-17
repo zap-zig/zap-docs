@@ -1,0 +1,106 @@
+---
+interface Props {
+  code: string;
+  lang?: 'bash' | 'toml' | 'text';
+}
+
+const { code, lang = 'bash' } = Astro.props;
+
+function highlightBash(code: string): string {
+  return code
+    .split('\n')
+    .map(line => {
+      // Comments
+      if (line.trim().startsWith('#')) {
+        return `<span class="comment">${escapeHtml(line)}</span>`;
+      }
+      
+      // Command with comment
+      const commentIdx = line.indexOf(' #');
+      if (commentIdx > 0) {
+        const cmd = line.slice(0, commentIdx);
+        const comment = line.slice(commentIdx);
+        return highlightCommand(cmd) + `<span class="comment">${escapeHtml(comment)}</span>`;
+      }
+      
+      return highlightCommand(line);
+    })
+    .join('\n');
+}
+
+function highlightCommand(line: string): string {
+  // Keywords
+  const keywords = ['sudo', 'cd', 'git', 'curl', 'rm', 'mkdir', 'source', 'export'];
+  let result = escapeHtml(line);
+  
+  for (const kw of keywords) {
+    const regex = new RegExp(`\\b${kw}\\b`, 'g');
+    result = result.replace(regex, `<span class="keyword">${kw}</span>`);
+  }
+  
+  // zap commands
+  result = result.replace(/\bzap\b/g, '<span class="function">zap</span>');
+  
+  // Strings
+  result = result.replace(/"([^"]*)"/g, '<span class="string">"$1"</span>');
+  
+  // Flags
+  result = result.replace(/(\s)(--?[\w-]+)/g, '$1<span class="variable">$2</span>');
+  
+  return result;
+}
+
+function highlightToml(code: string): string {
+  return code
+    .split('\n')
+    .map(line => {
+      // Comments
+      if (line.trim().startsWith('#')) {
+        return `<span class="comment">${escapeHtml(line)}</span>`;
+      }
+      
+      // Section headers
+      if (line.trim().match(/^\[.*\]$/)) {
+        return `<span class="keyword">${escapeHtml(line)}</span>`;
+      }
+      
+      // Key = value
+      const match = line.match(/^(\s*)(\w[\w-]*)(\s*=\s*)(.*)$/);
+      if (match) {
+        const [, indent, key, eq, value] = match;
+        let highlightedValue = escapeHtml(value);
+        
+        // Strings
+        if (value.startsWith('"')) {
+          highlightedValue = `<span class="string">${escapeHtml(value)}</span>`;
+        }
+        // Arrays
+        else if (value.startsWith('[')) {
+          highlightedValue = escapeHtml(value).replace(/"([^"]*)"/g, '<span class="string">"$1"</span>');
+        }
+        
+        return `${indent}<span class="variable">${escapeHtml(key)}</span>${escapeHtml(eq)}${highlightedValue}`;
+      }
+      
+      return escapeHtml(line);
+    })
+    .join('\n');
+}
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function highlight(code: string, lang: string): string {
+  if (lang === 'bash') return highlightBash(code);
+  if (lang === 'toml') return highlightToml(code);
+  return escapeHtml(code);
+}
+
+const highlighted = highlight(code.trim(), lang);
+---
+
+<pre><code set:html={highlighted} /></pre>

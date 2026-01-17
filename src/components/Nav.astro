@@ -1,0 +1,111 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/docs/install', label: 'Install' },
+  { href: '/docs/commands', label: 'Commands' },
+  { href: '/docs/config', label: 'Config' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav>
+  <div class="nav-container">
+    <a href="/" class="logo">
+      <svg class="logo-icon" viewBox="0 0 512 512" width="28" height="28">
+        <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="var(--md-surface-container-highest)"/>
+        <polygon points="295,72 160,272 248,272 217,440 352,240 264,240" fill="var(--md-primary)"/>
+      </svg>
+      <span>zap</span>
+    </a>
+    <div class="links">
+      {links.map(link => (
+        <a href={link.href} class:list={['nav-link', { active: currentPath === link.href }]}>
+          {link.label}
+        </a>
+      ))}
+      <a href="https://github.com/user/zap" class="btn-tonal" target="_blank">
+        <span class="material-symbols-rounded" style="font-size: 18px;">code</span>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    background: color-mix(in srgb, var(--md-surface) 90%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--md-outline-variant);
+    z-index: 100;
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--md-on-surface);
+  }
+
+  .logo:hover {
+    opacity: 1;
+  }
+
+  .logo-icon {
+    display: block;
+  }
+
+  .links {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .nav-link {
+    color: var(--md-on-surface-variant);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--md-shape-full);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .nav-link:hover {
+    background: var(--md-surface-container-high);
+    color: var(--md-on-surface);
+    opacity: 1;
+  }
+
+  .nav-link.active {
+    background: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+  }
+
+  .btn-tonal {
+    margin-left: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .links {
+      gap: 0.25rem;
+    }
+    
+    .nav-link {
+      padding: 0.5rem;
+      font-size: 0.8125rem;
+    }
+  }
+</style>

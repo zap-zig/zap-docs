@@ -1,0 +1,98 @@
+---
+---
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-brand">
+      <svg class="footer-logo" viewBox="0 0 512 512" width="24" height="24">
+        <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="var(--md-primary-container)"/>
+        <polygon points="295,72 160,272 248,272 217,440 352,240 264,240" fill="var(--md-primary)"/>
+      </svg>
+      <span>zap</span>
+    </div>
+    <p>Built with Zig. Zero dependencies.</p>
+    <div class="footer-links">
+      <a href="https://github.com/user/zap" target="_blank">
+        <span class="material-symbols-rounded">code</span>
+        Source
+      </a>
+      <a href="https://github.com/user/zap/issues" target="_blank">
+        <span class="material-symbols-rounded">bug_report</span>
+        Issues
+      </a>
+      <a href="/docs/install">
+        <span class="material-symbols-rounded">download</span>
+        Install
+      </a>
+    </div>
+    <p class="copyright">MIT License</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--md-outline-variant);
+    padding: 3rem 1.5rem;
+    background: var(--md-surface-container-lowest);
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--md-on-surface);
+  }
+
+  .footer-logo {
+    display: block;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--md-on-surface-variant);
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--md-shape-sm);
+    transition: background 0.2s;
+  }
+
+  .footer-links a:hover {
+    background: var(--md-surface-container);
+    color: var(--md-primary);
+    opacity: 1;
+  }
+
+  .footer-links .material-symbols-rounded {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  .copyright {
+    opacity: 0.6;
+    font-size: 0.75rem;
+  }
+</style>

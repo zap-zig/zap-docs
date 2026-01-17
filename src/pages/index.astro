@@ -1,0 +1,328 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Code from '../components/Code.astro';
+
+const features = [
+  { icon: 'bolt', title: 'Blazingly Fast', desc: 'Native Zig performance. Initialize projects in ~0.1s.' },
+  { icon: 'inventory_2', title: 'Zero Dependencies', desc: 'Built entirely with Zig stdlib. No curl, no unzip, nothing.' },
+  { icon: 'sd_card', title: 'Tiny Binary', desc: '~8 MB binary with zero external dependencies.' },
+  { icon: 'cached', title: 'Global Cache', desc: 'Download packages once, reuse across all projects.' },
+];
+---
+
+<Layout title="zap - Fast Python Package Manager" description="A blazingly fast Python package manager written in Zig">
+  <Nav />
+  
+  <main>
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="material-symbols-rounded icon-filled">bolt</span>
+        Built with Zig
+      </div>
+      <h1>zap</h1>
+      <p class="tagline">Fast and Safe Python Package Manager</p>
+    <p class="description">
+          Written in Zig with zero dependencies.
+        </p>
+      
+      <div class="cta">
+        <a href="/docs/install" class="btn-filled">
+          <span class="material-symbols-rounded">download</span>
+          Get Started
+        </a>
+        <a href="https://github.com/user/zap" class="btn-outlined">
+          <span class="material-symbols-rounded">code</span>
+          View Source
+        </a>
+      </div>
+
+      <div class="install-box">
+        <span class="material-symbols-rounded">terminal</span>
+        <span class="install-cmd">curl -fsSL https://zap.dev/install.sh | sh</span>
+        <button class="copy-btn" aria-label="Copy">
+          <span class="material-symbols-rounded">content_copy</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="features">
+      {features.map(f => (
+        <div class="card-outlined feature">
+          <div class="feature-icon">
+            <span class="material-symbols-rounded icon-filled">{f.icon}</span>
+          </div>
+          <h3>{f.title}</h3>
+          <p>{f.desc}</p>
+        </div>
+      ))}
+    </section>
+
+    <section class="demo">
+      <div class="demo-header">
+        <span class="material-symbols-rounded icon-filled">code_blocks</span>
+        <h2>Quick Start</h2>
+      </div>
+      <Code lang="bash" code={`# Initialize a new project
+zap init
+
+# Add packages
+zap append requests flask
+
+# Run your script
+zap run app.py
+
+# List installed packages
+zap list`} />
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <span class="stat-value">~8 MB</span>
+        <span class="stat-label">Binary Size</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">0</span>
+        <span class="stat-label">Dependencies</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">~0.1s</span>
+        <span class="stat-label">Init Time</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">Zig</span>
+        <span class="stat-label">Built With</span>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .hero {
+    padding: 5rem 0 4rem;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--md-tertiary-container);
+    color: var(--md-on-tertiary-container);
+    border-radius: var(--md-shape-full);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-badge .material-symbols-rounded {
+    font-size: 18px;
+  }
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--md-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .tagline {
+    font-size: 1.5rem;
+    color: var(--md-on-surface);
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+
+  .description {
+    color: var(--md-on-surface-variant);
+    margin-top: 0.75rem;
+    font-size: 1.125rem;
+  }
+
+  .cta {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .install-box {
+    margin-top: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--md-surface-container-high);
+    padding: 0.875rem 1.25rem;
+    border-radius: var(--md-shape-md);
+    border: 1px solid var(--md-outline-variant);
+  }
+
+  .install-box .material-symbols-rounded {
+    color: var(--md-on-surface-variant);
+    font-size: 20px;
+  }
+
+  .install-cmd {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9375rem;
+    color: var(--md-on-surface);
+  }
+
+  .copy-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--md-on-surface-variant);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: var(--md-shape-sm);
+    transition: background 0.2s;
+  }
+
+  .copy-btn:hover {
+    background: var(--md-surface-container-highest);
+    color: var(--md-primary);
+  }
+
+  .copy-btn .material-symbols-rounded {
+    font-size: 18px;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    padding: 3rem 0;
+  }
+
+  .feature {
+    padding: 1.5rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .feature:hover {
+    border-color: var(--md-primary);
+    background: var(--md-surface-container-low);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    border-radius: var(--md-shape-md);
+    margin-bottom: 1rem;
+  }
+
+  .feature-icon .material-symbols-rounded {
+    font-size: 24px;
+  }
+
+  .feature h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.375rem;
+  }
+
+  .feature p {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .demo {
+    padding: 3rem 0;
+  }
+
+  .demo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .demo-header .material-symbols-rounded {
+    color: var(--md-primary);
+    font-size: 28px;
+  }
+
+  .demo h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .demo :global(pre) {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    padding: 3rem 0;
+    border-top: 1px solid var(--md-outline-variant);
+    margin-top: 2rem;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--md-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--md-on-surface-variant);
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 3rem;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+    }
+
+    .cta {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .install-box {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  document.querySelector('.copy-btn')?.addEventListener('click', () => {
+    navigator.clipboard.writeText('curl -fsSL https://zap.dev/install.sh | sh');
+  });
+</script>

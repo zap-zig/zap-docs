@@ -1,0 +1,45 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import Code from '../../components/Code.astro';
+---
+
+<DocsLayout title="Installation" description="How to install zap">
+  <p>zap can be installed in several ways. Choose the method that works best for you.</p>
+
+  <h2>Quick Install (Recommended)</h2>
+  <p>Run the install script:</p>
+  <Code lang="bash" code="curl -fsSL https://zap.dev/install.sh | sh" />
+
+  <h2>Build from Source</h2>
+  <p>Requires <a href="https://ziglang.org/download/">Zig 0.15.2</a> or later.</p>
+  <Code lang="bash" code={`# Clone the repository
+git clone https://github.com/user/zap
+cd zap
+
+# Build release binary
+zig build -Doptimize=ReleaseFast
+
+# Install to /usr/local/bin
+sudo zig build -Doptimize=ReleaseFast --prefix /usr/local install
+
+# Or install to ~/.local/bin
+zig build -Doptimize=ReleaseFast --prefix ~/.local install`} />
+
+  <h2>Verify Installation</h2>
+  <Code lang="bash" code={`zap version
+# zap version 0.1.0`} />
+
+  <h2>System Requirements</h2>
+  <ul>
+    <li>Linux (x86_64, aarch64)</li>
+    <li>macOS (x86_64, aarch64)</li>
+    <li>Python 3.8 or later (for running Python projects)</li>
+  </ul>
+
+  <h2>Uninstall</h2>
+  <Code lang="bash" code={`# Remove the binary
+sudo rm /usr/local/bin/zap
+
+# Clear the cache (optional)
+rm -rf ~/.cache/zap`} />
+</DocsLayout>
