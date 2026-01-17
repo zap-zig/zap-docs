@@ -11,9 +11,9 @@ interface Props {
 const { title, description } = Astro.props;
 
 const sidebar = [
-  { href: 'https://zap-zig.github.io/zap-docs/docs/install/', label: 'Installation', icon: 'download' },
-  { href: 'https://zap-zig.github.io/zap-docs/docs/commands/', label: 'Commands', icon: 'terminal' },
-  { href: 'https://zap-zig.github.io/zap-docs/docs/config/', label: 'Configuration', icon: 'settings' },
+  { href: '/docs/install/', label: 'Installation', icon: 'download' },
+  { href: '/docs/commands/', label: 'Commands', icon: 'terminal' },
+  { href: '/docs/config/', label: 'Configuration', icon: 'settings' },
 ];
 
 const currentPath = Astro.url.pathname;
