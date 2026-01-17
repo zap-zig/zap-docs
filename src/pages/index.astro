@@ -40,7 +40,7 @@ const features = [
 
       <div class="install-box">
         <span class="material-symbols-rounded">terminal</span>
-        <span class="install-cmd">curl -fsSL https://zap-zig.github.io/install.sh | sh</span>
+        <span class="install-cmd">curl -fsSL https://raw.githubusercontent.com/zap-zig/zap-zig.github.io/main/install.sh | sh</span>
         <button class="copy-btn" aria-label="Copy">
           <span class="material-symbols-rounded">content_copy</span>
         </button>
@@ -323,6 +323,6 @@ zap list`} />
 
 <script>
   document.querySelector('.copy-btn')?.addEventListener('click', () => {
-    navigator.clipboard.writeText('curl -fsSL https://zap-zig.github.io/install.sh | sh');
+    navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/zap-zig/zap-zig.github.io/main/install.sh | sh');
   });
 </script>
