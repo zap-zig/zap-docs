@@ -9,6 +9,10 @@ const features = [
   { icon: 'inventory_2', title: 'Zero Dependencies', desc: 'Built entirely with Zig stdlib. No curl, no unzip, nothing.' },
   { icon: 'sd_card', title: 'Tiny Binary', desc: '~8 MB binary with zero external dependencies.' },
   { icon: 'cached', title: 'Global Cache', desc: 'Download packages once, reuse across all projects.' },
+  { icon: 'code', title: 'Git Dependencies', desc: 'Install packages directly from GitHub repositories.' },
+  { icon: 'download', title: 'Python Manager', desc: 'Download and manage Python versions automatically.' },
+  { icon: 'build', title: 'Native Builds', desc: 'Uses zig cc to build C extensions without gcc/clang.' },
+  { icon: 'description', title: 'requirements.txt', desc: 'Import existing projects with requirements.txt support.' },
 ];
 ---
 
@@ -64,17 +68,23 @@ const features = [
         <span class="material-symbols-rounded icon-filled">code_blocks</span>
         <h2>Quick Start</h2>
       </div>
-      <Code lang="bash" code={`# Initialize a new project
-zap init
+      <Code lang="bash" code={`# Install Python (optional - uses system Python if available)
+zap python install 3.12
 
-# Add packages
+# Initialize a new project
+zap init --python 3.12
+
+# Add packages from PyPI
 zap append requests flask
 
-# Run your script
-zap run app.py
+# Add packages from GitHub
+zap append git=https://github.com/user/repo
 
-# List installed packages
-zap list`} />
+# Install from requirements.txt
+zap install -r requirements.txt
+
+# Run your script
+zap run app.py`} />
     </section>
 
     <section class="stats">

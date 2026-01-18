@@ -27,19 +27,56 @@ zig build -Doptimize=ReleaseFast --prefix ~/.local install`} />
 
   <h2>Verify Installation</h2>
   <Code lang="bash" code={`zap version
-# zap version 0.1.0`} />
+# zap version 0.1.1`} />
 
   <h2>System Requirements</h2>
   <ul>
     <li>Linux (x86_64, aarch64)</li>
     <li>macOS (x86_64, aarch64)</li>
-    <li>Python 3.8 or later (for running Python projects)</li>
   </ul>
+
+  <h2>Python Requirements</h2>
+  <p>zap can manage Python for you! If you don't have Python installed, use:</p>
+  <Code lang="bash" code={`# Download and install Python 3.12
+zap python install 3.12
+
+# Initialize project with the installed Python
+zap init --python 3.12`} />
+
+  <p>Alternatively, zap works with any system Python 3.8 or later:</p>
+  <Code lang="bash" code={`# Use system Python
+zap init
+
+# Use specific system Python
+zap init --python 3.11`} />
+
+  <h2>What Gets Installed</h2>
+  <table>
+    <tr>
+      <th>Location</th>
+      <th>Contents</th>
+    </tr>
+    <tr>
+      <td><code>/usr/local/bin/zap</code></td>
+      <td>The zap binary (~8 MB)</td>
+    </tr>
+    <tr>
+      <td><code>~/.cache/zap/</code></td>
+      <td>Global package cache (created on first use)</td>
+    </tr>
+    <tr>
+      <td><code>~/.zap/python/</code></td>
+      <td>Managed Python installations (optional)</td>
+    </tr>
+  </table>
 
   <h2>Uninstall</h2>
   <Code lang="bash" code={`# Remove the binary
 sudo rm /usr/local/bin/zap
 
 # Clear the cache (optional)
-rm -rf ~/.cache/zap`} />
+rm -rf ~/.cache/zap
+
+# Remove managed Python installations (optional)
+rm -rf ~/.zap`} />
 </DocsLayout>

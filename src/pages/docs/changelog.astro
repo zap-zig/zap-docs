@@ -1,0 +1,139 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import Code from '../../components/Code.astro';
+---
+
+<DocsLayout title="Changelog" description="zap version history and release notes">
+  <p>All notable changes to zap are documented here.</p>
+
+  <h2 id="0.1.1">0.1.1 <span class="version-date">(2025-01-18)</span></h2>
+  
+  <h3>New Features</h3>
+  <ul>
+    <li>
+      <strong>Python Version Management</strong> - Download and manage Python versions directly with zap.
+      <Code lang="bash" code={`zap python install 3.12
+zap python list
+zap init --python 3.12`} />
+      <p>Python versions are downloaded from <a href="https://github.com/astral-sh/python-build-standalone">python-build-standalone</a> and installed to <code>~/.zap/python/</code>.</p>
+    </li>
+    <li>
+      <strong>Git Dependencies</strong> - Install packages directly from git repositories.
+      <Code lang="bash" code={`zap append git=https://github.com/user/repo
+zap append git=https://github.com/user/repo@main
+zap append git=https://github.com/user/repo@v1.0.0`} />
+    </li>
+    <li>
+      <strong>requirements.txt Support</strong> - Import existing projects with the new install command.
+      <Code lang="bash" code="zap install -r requirements.txt" />
+    </li>
+    <li>
+      <strong>Native C/C++ Compilation</strong> - Uses <code>zig cc</code> as the C/C++ compiler for building source distributions. No need to install gcc or clang separately.
+    </li>
+    <li>
+      <strong>PEP 440 Version Parsing</strong> - Full support for Python version specifiers including pre-releases, post-releases, and dev versions.
+    </li>
+  </ul>
+
+  <h3>Bug Fixes</h3>
+  <ul>
+    <li>Fixed race condition in HTTP temp file handling - now uses unique temp files with random names.</li>
+    <li>Fixed dependency name parsing for constraints like <code>pluggy&lt;2,&gt;=1.5</code> - now correctly extracts package name.</li>
+    <li>Fixed handling of comma-separated version constraints in requirements parsing.</li>
+  </ul>
+
+  <h3>Improvements</h3>
+  <ul>
+    <li>Replaced shell commands with native Zig implementations:
+      <ul>
+        <li><code>which</code> replaced with native PATH scanning</li>
+        <li><code>cp -r</code> replaced with native file copy</li>
+        <li><code>tar -xzf</code> replaced with native tar/gzip extraction</li>
+      </ul>
+    </li>
+    <li>Added comprehensive unit tests for core modules (pyproject, wheel, cache, lock, version, requirements, git).</li>
+    <li>Improved sdist building with proper build isolation and fallback strategies.</li>
+    <li>Git dependencies now install their own requirements.txt dependencies recursively.</li>
+  </ul>
+
+  <h3>New Modules</h3>
+  <ul>
+    <li><code>src/version.zig</code> - PEP 440 version parsing and comparison</li>
+    <li><code>src/build.zig</code> - Source distribution building with pip/build</li>
+    <li><code>src/git.zig</code> - Git dependency installation</li>
+    <li><code>src/requirements.zig</code> - requirements.txt parsing</li>
+    <li><code>src/python_download.zig</code> - Python version management</li>
+  </ul>
+
+  <hr />
+
+  <h2 id="0.1.0">0.1.0 <span class="version-date">(2025-01-15)</span></h2>
+  
+  <h3>Initial Release</h3>
+  <p>First public release of zap - a fast Python package manager written in Zig.</p>
+  
+  <h3>Features</h3>
+  <ul>
+    <li>Initialize Python projects with virtual environments (<code>zap init</code>)</li>
+    <li>Install packages from PyPI (<code>zap append</code>)</li>
+    <li>Remove packages (<code>zap remove</code>)</li>
+    <li>Sync dependencies from pyproject.toml (<code>zap sync</code>)</li>
+    <li>Run Python scripts in venv (<code>zap run</code>)</li>
+    <li>List installed packages (<code>zap list</code>)</li>
+    <li>Global package cache at <code>~/.cache/zap/</code></li>
+    <li>Lock file support (<code>zap.lock</code>)</li>
+    <li>Native HTTP client (no curl dependency)</li>
+    <li>Native wheel extraction (no unzip dependency)</li>
+  </ul>
+
+  <h3>Technical Details</h3>
+  <ul>
+    <li>Written in Zig 0.15.2</li>
+    <li>Zero external dependencies</li>
+    <li>~8 MB binary size</li>
+    <li>Supports Linux and macOS (x86_64, aarch64)</li>
+  </ul>
+</DocsLayout>
+
+<style>
+  .version-date {
+    font-size: 0.875rem;
+    color: var(--md-on-surface-variant);
+    font-weight: 400;
+  }
+
+  h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  hr {
+    margin: 3rem 0;
+    border: none;
+    border-top: 1px solid var(--md-outline-variant);
+  }
+
+  ul {
+    margin-bottom: 1rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  li ul {
+    margin-top: 0.5rem;
+  }
+
+  li p {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+  }
+</style>

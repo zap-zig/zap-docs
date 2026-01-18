@@ -4,7 +4,7 @@ import Code from '../../components/Code.astro';
 ---
 
 <DocsLayout title="Configuration" description="zap configuration files">
-  <p>zap uses two configuration files to manage your project.</p>
+  <p>zap uses configuration files and directories to manage your projects and Python installations.</p>
 
   <h2>pyproject.toml</h2>
   <p>Standard Python project configuration file. zap reads and writes the <code>[project]</code> section.</p>
@@ -17,6 +17,7 @@ dependencies = [
     "requests",
     "flask",
     "sqlalchemy",
+    "mypackage @ git+https://github.com/user/repo",
 ]`} />
 
   <p><strong>Fields:</strong></p>
@@ -39,7 +40,7 @@ dependencies = [
     </tr>
     <tr>
       <td><code>dependencies</code></td>
-      <td>List of package dependencies</td>
+      <td>List of package dependencies (PyPI or git URLs)</td>
     </tr>
   </table>
 
@@ -59,11 +60,11 @@ version = "2024.2.2"
 name = "requests"
 version = "2.31.0"`} />
 
-  <h2>Global Cache</h2>
-  <p>Downloaded packages are cached globally at:</p>
-  <Code lang="bash" code="~/.cache/zap/wheels/" />
-  
-  <p>Structure:</p>
+  <h2>Directory Structure</h2>
+  <p>zap uses the following directories:</p>
+
+  <h3>Global Cache</h3>
+  <p>Downloaded packages are cached globally:</p>
   <Code lang="text" code={`~/.cache/zap/
   wheels/
     requests-2.31.0/
@@ -71,17 +72,28 @@ version = "2.31.0"`} />
       extracted/
     certifi-2024.2.2/
       certifi-2024.2.2-py3-none-any.whl
-      extracted/`} />
+      extracted/
+  git-mypackage/
+    mypackage-1.0.0-py3-none-any.whl`} />
 
-  <p>Manage with <code>zap cache</code> commands:</p>
-  <Code lang="bash" code={`# View cache size
-zap cache info
+  <h3>Python Installations</h3>
+  <p>Managed Python versions are stored at:</p>
+  <Code lang="text" code={`~/.zap/python/
+  3.12.8/
+    bin/
+      python3
+      pip3
+    lib/
+      python3.12/
+    include/
+  3.11.11/
+    ...`} />
 
-# Clear all cached packages
-zap cache clean`} />
+  <p>List installed versions:</p>
+  <Code lang="bash" code="zap python list" />
 
-  <h2>Virtual Environment</h2>
-  <p>zap creates a standard Python virtual environment at <code>.venv/</code>:</p>
+  <h3>Project Virtual Environment</h3>
+  <p>Each project has its own virtual environment at <code>.venv/</code>:</p>
   <Code lang="text" code={`.venv/
   bin/
     python
@@ -91,9 +103,35 @@ zap cache clean`} />
     python3.12/
       site-packages/
   pyvenv.cfg`} />
-  
+
+  <h2>Cache Management</h2>
+  <p>Manage the global cache with <code>zap cache</code> commands:</p>
+  <Code lang="bash" code={`# View cache location and size
+zap cache info
+
+# Clear all cached packages
+zap cache clean`} />
+
+  <h2>Using the Virtual Environment</h2>
   <p>You can activate it manually if needed:</p>
   <Code lang="bash" code="source .venv/bin/activate" />
   
   <p>But <code>zap run</code> automatically uses the venv, so activation is usually unnecessary.</p>
+
+  <h2>Git Dependencies</h2>
+  <p>Git dependencies in <code>pyproject.toml</code> use PEP 440 URL syntax:</p>
+  <Code lang="toml" code={`dependencies = [
+    # From main branch
+    "package @ git+https://github.com/user/repo",
+    
+    # Specific branch
+    "package @ git+https://github.com/user/repo@main",
+    
+    # Specific tag
+    "package @ git+https://github.com/user/repo@v1.0.0",
+]`} />
+
+  <p>When adding via CLI, use the <code>git=</code> syntax:</p>
+  <Code lang="bash" code={`zap append git=https://github.com/user/repo
+zap append git=https://github.com/user/repo@main`} />
 </DocsLayout>
