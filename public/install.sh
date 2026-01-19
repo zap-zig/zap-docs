@@ -2,7 +2,7 @@
 
 set -e  # Exit on error
 
-VERSION="0.1.1"
+VERSION="0.1.2"
 
 echo "Installing zap v$VERSION..."
 
