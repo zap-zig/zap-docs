@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://zapzig.org',          // ← your domain
-  base: '/',                           // ← root, no /zap-docs or other subpath
-  trailingSlash: 'never',              // optional: cleaner URLs
+  site: 'http://zapzig.org',           // ← changed to http for now
+  base: '/zap-docs/',                  // ← Changed to match your repository name
+  trailingSlash: 'never',              
 });
