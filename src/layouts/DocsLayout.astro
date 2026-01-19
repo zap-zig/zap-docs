@@ -10,10 +10,10 @@ interface Props {
 
 const { title, description } = Astro.props;
 
-const sidebar = [
-  { href: '/zap-docs/docs/install/', label: 'Installation', icon: 'download' },
-  { href: '/zap-docs/docs/commands/', label: 'Commands', icon: 'terminal' },
-  { href: '/zap-docs/docs/config/', label: 'Configuration', icon: 'settings' },
+const navItems = [
+      { href: '/docs/install/', label: 'Installation', icon: 'download' },
+      { href: '/docs/commands/', label: 'Commands', icon: 'terminal' },
+      { href: '/docs/config/', label: 'Configuration', icon: 'settings' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -30,7 +30,7 @@ const currentPath = Astro.url.pathname;
           <span>Documentation</span>
         </div>
         <ul>
-          {sidebar.map(item => (
+          {navItems.map(item => (
             <li>
               <a href={item.href} class:list={[{ active: currentPath === item.href }]}>
                 <span class="material-symbols-rounded">{item.icon}</span>
