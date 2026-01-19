@@ -32,21 +32,51 @@ function highlightCommand(line: string): string {
   // Keywords
   const keywords = ['sudo', 'cd', 'git', 'curl', 'rm', 'mkdir', 'source', 'export'];
   let result = escapeHtml(line);
-  
+
+  // Use placeholders to avoid conflicts with HTML attributes
+  const placeholders: Record<string, string> = {};
+
+  // Replace keywords with placeholders
+  let placeholderIndex = 0;
   for (const kw of keywords) {
     const regex = new RegExp(`\\b${kw}\\b`, 'g');
-    result = result.replace(regex, `<span class="keyword">${kw}</span>`);
+    result = result.replace(regex, (match) => {
+      const placeholder = `__KEYWORD_${placeholderIndex}__`;
+      placeholders[placeholder] = `<span class="keyword">${match}</span>`;
+      placeholderIndex++;
+      return placeholder;
+    });
   }
-  
-  // zap commands
-  result = result.replace(/\bzap\b/g, '<span class="function">zap</span>');
-  
+
+  // Replace zap with placeholder
+  result = result.replace(/\bzap\b/g, (match) => {
+    const placeholder = `__FUNCTION_${placeholderIndex}__`;
+    placeholders[placeholder] = `<span class="function">${match}</span>`;
+    placeholderIndex++;
+    return placeholder;
+  });
+
   // Strings
-  result = result.replace(/"([^"]*)"/g, '<span class="string">"$1"</span>');
-  
+  result = result.replace(/"([^"]*)"/g, (match, content) => {
+    const placeholder = `__STRING_${placeholderIndex}__`;
+    placeholders[placeholder] = `<span class="string">"${content}"</span>`;
+    placeholderIndex++;
+    return placeholder;
+  });
+
   // Flags
-  result = result.replace(/(\s)(--?[\w-]+)/g, '$1<span class="variable">$2</span>');
-  
+  result = result.replace(/(\s)(--?[\w-]+)/g, (match, space, flag) => {
+    const placeholder = `__VARIABLE_${placeholderIndex}__`;
+    placeholders[placeholder] = `${space}<span class="variable">${flag}</span>`;
+    placeholderIndex++;
+    return placeholder;
+  });
+
+  // Replace placeholders with actual HTML
+  for (const [placeholder, html] of Object.entries(placeholders)) {
+    result = result.replace(placeholder, html);
+  }
+
   return result;
 }
 
