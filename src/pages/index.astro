@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Code from '../components/Code.astro';
+import MaterialRipple from '../components/MaterialRipple.astro';
 
 const features = [
   { icon: 'bolt', title: 'Blazingly Fast', desc: 'Native Zig performance. Initialize projects in ~0.1s.' },
@@ -32,34 +33,42 @@ const features = [
         </p>
       
       <div class="cta">
-        <a href="/docs/install/" class="btn-filled">
-          <span class="material-symbols-rounded">download</span>
-          Get Started
-        </a>
-        <a href="https://github.com/zap-zig/zap" class="btn-outlined">
-          <span class="material-symbols-rounded">code</span>
-          View Source
-        </a>
+        <MaterialRipple>
+          <a href="/docs/install/" class="btn-filled">
+            <span class="material-symbols-rounded">download</span>
+            Get Started
+          </a>
+        </MaterialRipple>
+        <MaterialRipple>
+          <a href="https://github.com/zap-zig/zap" class="btn-outlined">
+            <span class="material-symbols-rounded">code</span>
+            View Source
+          </a>
+        </MaterialRipple>
       </div>
 
       <div class="install-box">
         <span class="material-symbols-rounded">terminal</span>
         <span class="install-cmd">curl -fsSL https://zap-zig.github.io/install.sh | sh</span>
-        <button class="copy-btn" aria-label="Copy">
-          <span class="material-symbols-rounded">content_copy</span>
-        </button>
+        <MaterialRipple>
+          <button class="copy-btn" aria-label="Copy">
+            <span class="material-symbols-rounded">content_copy</span>
+          </button>
+        </MaterialRipple>
       </div>
     </section>
 
     <section class="features">
       {features.map(f => (
-        <div class="card-outlined feature">
-          <div class="feature-icon">
-            <span class="material-symbols-rounded icon-filled">{f.icon}</span>
+        <MaterialRipple>
+          <div class="card-outlined feature">
+            <div class="feature-icon">
+              <span class="material-symbols-rounded icon-filled">{f.icon}</span>
+            </div>
+            <h3>{f.title}</h3>
+            <p>{f.desc}</p>
           </div>
-          <h3>{f.title}</h3>
-          <p>{f.desc}</p>
-        </div>
+        </MaterialRipple>
       ))}
     </section>
 

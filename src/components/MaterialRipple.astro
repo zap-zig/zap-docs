@@ -1,0 +1,77 @@
+---
+// MaterialRipple.astro - Component to add ripple effects to interactive elements
+interface Props {
+  children: any;
+  className?: string;
+}
+
+const { children, className = '' } = Astro.props;
+---
+
+<div class={`ripple-element ${className}`}>
+  <slot />
+</div>
+
+<style>
+  .ripple-element {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--md-on-surface);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+    opacity: 0.2;
+  }
+
+  [data-theme="dark"] .ripple {
+    background: var(--md-on-surface);
+  }
+
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const rippleElements = document.querySelectorAll('.ripple-element');
+    
+    rippleElements.forEach(element => {
+      element.addEventListener('click', function(e) {
+        // Remove any existing ripples
+        const existingRipples = this.querySelectorAll('.ripple');
+        existingRipples.forEach(ripple => ripple.remove());
+        
+        // Create ripple
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        
+        // Position ripple at click location relative to the element
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+        
+        // Add ripple to element
+        this.appendChild(ripple);
+        
+        // Remove ripple after animation completes
+        setTimeout(() => {
+          if (ripple.parentNode === this) {
+            ripple.remove();
+          }
+        }, 600);
+      });
+    });
+  });
+</script>

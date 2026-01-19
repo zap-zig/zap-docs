@@ -1,4 +1,6 @@
 ---
+import MaterialRipple from './MaterialRipple.astro';
+
 const links = [
   { href: '/', label: 'Home' },
   { href: '/docs/install/', label: 'Install' },
@@ -12,23 +14,29 @@ const currentUrl = Astro.url.href;
 
 <nav>
   <div class="nav-container">
-    <a href="/" class="logo">
-      <svg class="logo-icon" viewBox="0 0 512 512" width="28" height="28">
-        <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="var(--md-surface-container-highest)"/>
-        <polygon points="295,72 160,272 248,272 217,440 352,240 264,240" fill="var(--md-primary)"/>
-      </svg>
-      <span>zap</span>
-    </a>
+    <MaterialRipple>
+      <a href="/" class="logo">
+        <svg class="logo-icon" viewBox="0 0 512 512" width="28" height="28">
+          <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="var(--md-surface-container-highest)"/>
+          <polygon points="295,72 160,272 248,272 217,440 352,240 264,240" fill="var(--md-primary)"/>
+        </svg>
+        <span>zap</span>
+      </a>
+    </MaterialRipple>
     <div class="links">
        {links.map(link => (
-         <a href={link.href} class:list={['nav-link', { active: currentUrl === link.href }]}>
-           {link.label}
-         </a>
+         <MaterialRipple>
+           <a href={link.href} class:list={['nav-link', { active: currentUrl === link.href }]}>
+             {link.label}
+           </a>
+         </MaterialRipple>
        ))}
-      <a href="https://github.com/zap-zig/zap-docs" class="btn-tonal" target="_blank">
-        <span class="material-symbols-rounded" style="font-size: 18px;">code</span>
-        GitHub
-      </a>
+      <MaterialRipple>
+        <a href="https://github.com/zap-zig/zap-docs" class="btn-tonal" target="_blank">
+          <span class="material-symbols-rounded" style="font-size: 18px;">code</span>
+          GitHub
+        </a>
+      </MaterialRipple>
     </div>
   </div>
 </nav>
